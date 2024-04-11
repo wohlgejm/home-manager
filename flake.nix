@@ -8,14 +8,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, ... }: let
+  outputs = { nixpkgs, home-manager, ... }: let
     arch = "x86_64-linux";
   in {
     defaultPackage.${arch} =
@@ -24,7 +19,7 @@
     homeConfigurations.jerry = # REPLACE ME
       home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${arch};
-        modules = [ ./home.nix nixvim.homeManagerModules.nixvim ];
+        modules = [ ./home.nix ];
       };
     };
 }
