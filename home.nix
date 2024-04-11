@@ -12,7 +12,8 @@
     pkgs.wget
     pkgs.ripgrep
     pkgs.fd
-    pkgs.xclip pkgs.kubectl
+    pkgs.xclip 
+    pkgs.kubectl
   ];
 
   programs.git = {
