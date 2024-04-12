@@ -18,4 +18,4 @@ Install by running:
 home-manager switch
 ```
 
-For completion in neovim with Codeium, start nvim and run Codeium Auth to import a token.
+For completion in neovim with Codeium, start nvim and run `Codeium Auth` to import a token.
