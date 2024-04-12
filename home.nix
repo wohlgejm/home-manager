@@ -14,6 +14,11 @@
     pkgs.fd
     pkgs.xclip 
     pkgs.kubectl
+
+    # language servers
+    pkgs.rubyPackages.solargraph
+    pkgs.nodePackages_latest.typescript-language-server
+    pkgs.nodePackages_latest.pyright
   ];
 
   programs.git = {
@@ -35,14 +40,20 @@
     vimAlias = true;
 
     plugins = with pkgs.vimPlugins; [
+      # utility
+      telescope-nvim
+      vim-surround
+
       # completion
       plenary-nvim
       nvim-cmp
       codeium-vim
 
+      # highlighting
       pkgs.vimPlugins.nvim-treesitter.withAllGrammars
 
-      telescope-nvim
+      # jump to definitions
+      nvim-lspconfig
     ];
 
     extraLuaConfig = ''
@@ -57,6 +68,20 @@
       vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 
       vim.keymap.set('n', '<leader>w', '<C-w>', {})
+
+      local lspconfig = require('lspconfig')
+      lspconfig.solargraph.setup {}
+      lspconfig.pyright.setup {}
+      lspconfig.tsserver.setup {}
+
+      vim.api.nvim_create_autocmd('LspAttach', {
+	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+	callback = function(ev)
+	  local opts = { buffer = ev.buf }
+	  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+	  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+	end
+      })
     '';
   };
 }
