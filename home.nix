@@ -62,12 +62,14 @@
       vim.opt.clipboard = "unnamedplus";
       vim.g.mapleader = " ";
 
+      vim.keymap.set('n', '<leader>w', '<C-w>', {})
+      vim.keymap.set('n', '<leader>n', ':bnext<CR>', {})
+      vim.keymap.set('n', '<leader>x', ':bdelete<CR>', {})
+
       local builtin = require('telescope.builtin')
       vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
       vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
       vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-
-      vim.keymap.set('n', '<leader>w', '<C-w>', {})
 
       local lspconfig = require('lspconfig')
       lspconfig.solargraph.setup {}
