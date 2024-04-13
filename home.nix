@@ -42,7 +42,9 @@
     plugins = with pkgs.vimPlugins; [
       # utility
       telescope-nvim
-      vim-surround
+      lualine-nvim
+      nvim-web-devicons
+      yanky-nvim
 
       # completion
       plenary-nvim
@@ -66,10 +68,17 @@
       vim.keymap.set('n', '<leader>n', ':bnext<CR>', {})
       vim.keymap.set('n', '<leader>x', ':bdelete<CR>', {})
 
+      require('lualine').setup()
+
       local builtin = require('telescope.builtin')
       vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
       vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
       vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+
+      require("yanky").setup({})
+      vim.keymap.set({"n","x"}, "p", "<Plug>(YankyPutAfter)")
+      vim.keymap.set({"n","x"}, "P", "<Plug>(YankyPutBefore)")
+      require("telescope").load_extension("yank_history")
 
       local lspconfig = require('lspconfig')
       lspconfig.solargraph.setup {}
